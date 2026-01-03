@@ -3,7 +3,7 @@
 module tb_round_robin_arbiter;
 
 
-    parameter N = 5; // set to 4 for easier waveform readability, works for 32 too
+    parameter N = 5;
     
     reg          clk;
     reg          rst_n;
@@ -32,8 +32,8 @@ module tb_round_robin_arbiter;
 
   
   initial begin
-        $dumpfile("waves.vcd");                    // Name of the output file
-        $dumpvars(0, tb_round_robin_arbiter);      // Dump all signals in this module and below
+        $dumpfile("waves.vcd");              
+        $dumpvars(0, tb_round_robin_arbiter);
     end
 
     initial begin
@@ -51,31 +51,25 @@ module tb_round_robin_arbiter;
         @(negedge clk); // Wait for grant cycle
 
         // 3. Multi-Request Test (Priority Logic)
-        // Request 1 and 2. Since 0 was just granted, 1 should be next.
         $display("\n--- Test: Priority Rotation (0 was last, now Req 1 & 2) ---");
         req = 4'b0110; 
         @(negedge clk); // Expect Grant 1 (4'b0010)
         
-        // Now keep holding the same request. Next cycle should grant 2.
+        
         $display("--- Test: Holding Req (Expect Grant to move to 2) ---");
-        @(negedge clk); // Expect Grant 2 (4'b0100)
+        @(negedge clk);
 
         // 4. Wrap-Around Test
-        // Current state: Last Grant was 2. 
-        // We request bit 0 (lower index) and bit 1.
-        // Logic should wrap around and grant 0.
         $display("\n--- Test: Wrap Around (Last was 2, Req 0 & 1) ---");
         req = 4'b0011;
         @(negedge clk); // Expect Grant 0 (4'b0001)
 
         // 5. Saturation / Starvation Freedom Test
-        // All Requesters assert high. The grant should walk 0->1->2->3->0...
         $display("\n--- Test: Starvation Freedom (All Req High) ---");
         req = 4'b1111;
         repeat (6) @(negedge clk);
 
         // 6. Idle Test
-        // No requests. Grant should be 0. Pointer should NOT move.
         $display("\n--- Test: Idle (No Req) ---");
         req = 4'b0000;
         repeat (2) @(negedge clk);
@@ -91,4 +85,5 @@ module tb_round_robin_arbiter;
 endmodule
 
 endmodule
+
 
