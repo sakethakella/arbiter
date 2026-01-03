@@ -4,6 +4,7 @@
 
 #define N 32 
 
+// this for our convenience in C, to sumulate real-time hardware reset logic: we can place this inside a void function and call at the beginning of every cycle.
 static int last_granted_index = N - 1; 
 
 
@@ -80,3 +81,4 @@ int main() {
 
     return 0;
 }
+
