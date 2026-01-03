@@ -28,7 +28,9 @@ This approach guarantees that any requester holding its request high will eventu
 
 ## Repository Structure
 
-├── arbiter.c # C reference model
+├── mask_unmask_arbiter.c # C reference model
+
+├── rotatingpointer_arbiter.c # C initial model
 
 ├── arbiter.v # Verilog round-robin arbiter (RTL)
 
