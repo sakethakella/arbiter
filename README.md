@@ -34,6 +34,8 @@ This approach guarantees that any requester holding its request high will eventu
 
 ├── tb_round_robin_arbiter.v # Verilog testbench
 
+├── logs
+
 └── README.md # This file
 
 
