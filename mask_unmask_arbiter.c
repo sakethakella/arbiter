@@ -1,3 +1,8 @@
+// Sofware Implementation of a Round-Robin Arbiter, scalable up to large N
+// NOTE: While C demonstrates sequential loops, and hardware behaviour usually is parallel, the simulation indicates cycle-accurate behaviour. This is a behavioural reference model, not a gate-level implementation.
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -20,7 +25,7 @@ void arbiter_logic_mask_unmask(int requests[N], int grants[N]) {
         }
     }
 
-
+// this prevents the pointer advancing in case of no request, maintaining fairness.
     if (winner == -1) {
         for (int i = 0; i <= last_granted_index; i++) {
             if (requests[i] == 1) {
@@ -81,4 +86,5 @@ int main() {
 
     return 0;
 }
+
 
